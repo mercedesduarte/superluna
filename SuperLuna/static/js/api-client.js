@@ -24,12 +24,16 @@ class ApiClient {
         }
     }
 
-    // Productos
+    // ==================== PRODUCTOS ====================
     async getProducts(category = null) {
         const params = new URLSearchParams();
         if (category) params.append('category', category);
         
         return this.request(`/products?${params}`);
+    }
+
+    async getAdminProducts() {
+        return this.request('/admin/products');
     }
 
     async getProduct(id) {
@@ -56,7 +60,7 @@ class ApiClient {
         });
     }
 
-    // Ofertas
+    // ==================== OFERTAS ====================
     async getDailyOffers() {
         return this.request('/offers/daily');
     }
@@ -65,20 +69,68 @@ class ApiClient {
         return this.request('/offers');
     }
 
-    async updateOfferStock(id, stockData) {
-        return this.request(`/offers/${id}/stock`, {
+    async toggleDailyOffer(id, isDailyOffer) {
+        return this.request(`/products/${id}`, {
             method: 'PUT',
-            body: JSON.stringify(stockData)
+            body: JSON.stringify({ is_daily_offer: isDailyOffer })
         });
     }
 
-    // Categorías
+    // ==================== CATEGORÍAS ====================
     async getCategories() {
         return this.request('/categories');
     }
 
     async getCategory(id) {
         return this.request(`/categories/${id}`);
+    }
+
+    async createCategory(categoryData) {
+        return this.request('/categories', {
+            method: 'POST',
+            body: JSON.stringify(categoryData)
+        });
+    }
+
+    async updateCategory(id, categoryData) {
+        return this.request(`/categories/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(categoryData)
+        });
+    }
+
+    async deleteCategory(id) {
+        return this.request(`/categories/${id}`, {
+            method: 'DELETE'
+        });
+    }
+
+    // ==================== ADMIN ====================
+    async adminLogin(credentials) {
+        return this.request('/admin/login', {
+            method: 'POST',
+            body: JSON.stringify(credentials)
+        });
+    }
+
+    async verifyAdmin() {
+        return this.request('/admin/verify');
+    }
+
+    async getDashboard() {
+        return this.request('/admin/dashboard');
+    }
+
+    // ==================== UTILIDADES ====================
+    async searchProducts(query) {
+        const params = new URLSearchParams();
+        if (query) params.append('q', query);
+        
+        return this.request(`/products/search?${params}`);
+    }
+
+    async getProductsByCategory(categoryId) {
+        return this.request(`/categories/${categoryId}/products`);
     }
 }
 

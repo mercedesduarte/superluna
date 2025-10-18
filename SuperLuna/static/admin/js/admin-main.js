@@ -7,9 +7,8 @@ class AdminApp {
     static editingCategory = null;
     static currentSection = 'dashboard';
 
-    // Inicializar la aplicación
     static init() {
-        console.log('🚀 Inicializando AdminApp...');
+        console.log('Inicializando Admin...');
         this.checkAuth();
         this.bindEvents();
     }
@@ -24,10 +23,10 @@ class AdminApp {
                 this.isAuthenticated = true;
                 this.currentUser = data.user;
                 this.showAdminPanel();
-                console.log('✅ Usuario autenticado:', data.user);
+                console.log('Usuario autenticado:', data.user);
             } else {
                 this.showLoginPanel();
-                console.log('❌ No autenticado');
+                console.log('No autenticado');
             }
         } catch (error) {
             console.error('Error verificando autenticación:', error);
@@ -35,71 +34,63 @@ class AdminApp {
         }
     }
 
-    // Mostrar panel de login
     static showLoginPanel() {
         document.getElementById('login-panel').style.display = 'flex';
         document.getElementById('admin-panel').style.display = 'none';
         this.isAuthenticated = false;
-        console.log('🔐 Mostrando panel de login');
+        console.log('Mostrando panel de login');
     }
 
-    // Mostrar panel admin
     static showAdminPanel() {
         document.getElementById('login-panel').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'flex';
         this.isAuthenticated = true;
-        console.log('👨‍💼 Mostrando panel admin');
+        console.log('Mostrando panel admin');
         
-        // Cargar dashboard por defecto
         this.loadSection('dashboard');
     }
 
-    // Vincular eventos
     static bindEvents() {
-        console.log('🔗 Vinculando eventos...');
+        console.log('Vinculando eventos...');
         
-        // Login form
         const loginForm = document.getElementById('login-form');
         if (loginForm) {
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 this.handleLogin();
             });
-            console.log('✅ Login form vinculado');
+            console.log('Login form vinculado');
         }
-
-        // Logout
+     
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.handleLogout();
             });
-            console.log('✅ Logout button vinculado');
+            console.log('Logout button vinculado');
         }
 
-        // Navegación entre pestañas
         const menuItems = document.querySelectorAll('.admin-menu-item[data-tab]');
-        console.log(`📋 Encontrados ${menuItems.length} items del menú`);
+        console.log(`Encontrados ${menuItems.length} items del menú`);
         
         menuItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tab = e.currentTarget.getAttribute('data-tab');
-                console.log(`🔄 Cambiando a pestaña: ${tab}`);
+                console.log(`Cambiando a pestaña: ${tab}`);
                 this.switchTab(tab);
             });
         });
 
-        console.log('🎯 Todos los eventos vinculados correctamente');
+        console.log('Todos los eventos vinculados correctamente');
     }
-
-    // Manejar login
+ 
     static async handleLogin() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        console.log(`🔐 Intentando login con usuario: ${username}`);
+        console.log(`Intentando login con usuario: ${username}`);
 
         try {
             const response = await fetch('/api/admin/login', {
@@ -116,32 +107,29 @@ class AdminApp {
                 this.isAuthenticated = true;
                 this.currentUser = data.user;
                 this.showAdminPanel();
-                this.showMessage('✅ Login exitoso', 'success');
-                console.log('✅ Login exitoso');
+                this.showMessage('Login exitoso', 'success');
+                console.log('Login exitoso');
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error en login'), 'error');
-                console.log('❌ Login fallido:', data.message);
+                this.showMessage(data.message || 'Error en login', 'error');
+                console.log('Login fallido:', data.message);
             }
         } catch (error) {
             console.error('Error en login:', error);
-            this.showMessage('❌ Error de conexión', 'error');
+            this.showMessage('Error de conexión', 'error');
         }
     }
 
-    // Manejar logout
     static handleLogout() {
         this.isAuthenticated = false;
         this.currentUser = null;
         this.showLoginPanel();
-        this.showMessage('👋 Sesión cerrada', 'info');
-        console.log('🚪 Sesión cerrada');
+        this.showMessage('Sesión cerrada', 'info');
+        console.log('Sesión cerrada');
     }
 
-    // Cambiar entre pestañas
     static switchTab(tabName) {
-        console.log(`🔄 Cambiando a pestaña: ${tabName}`);
+        console.log(`Cambiando a pestaña: ${tabName}`);
         
-        // Actualizar menú activo
         document.querySelectorAll('.admin-menu-item').forEach(item => {
             item.classList.remove('active');
         });
@@ -150,8 +138,7 @@ class AdminApp {
         if (activeMenuItem) {
             activeMenuItem.classList.add('active');
         }
-
-        // Actualizar título
+   
         const titles = {
             'dashboard': 'Dashboard',
             'products': 'Gestión de Productos',
@@ -185,7 +172,7 @@ class AdminApp {
 
     // Cargar sección
     static async loadSection(sectionName) {
-        console.log(`📥 Cargando sección: ${sectionName}`);
+        console.log(`Cargando sección: ${sectionName}`);
         
         switch(sectionName) {
             case 'dashboard':
@@ -201,35 +188,36 @@ class AdminApp {
                 await this.loadCategories();
                 break;
             default:
-                console.warn(`❌ Sección desconocida: ${sectionName}`);
+                console.warn(`Sección desconocida: ${sectionName}`);
         }
     }
 
     // ==================== DASHBOARD ====================
     static async loadDashboard() {
         try {
-            console.log('📊 Cargando dashboard...');
+            console.log('Cargando dashboard...');
+            // CORREGIDO: Cambiar '/admin' por '/api/admin/dashboard'
             const response = await fetch('/api/admin/dashboard');
             const data = await response.json();
 
             if (data.success) {
                 this.renderDashboard(data.stats);
-                console.log('✅ Dashboard cargado correctamente');
+                console.log('Dashboard cargado correctamente');
             } else {
                 document.getElementById('dashboard').innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">❌</div>
+                        <div class="empty-icon"></div>
                         <h3>Error cargando dashboard</h3>
                         <p>No se pudieron cargar las estadísticas</p>
                     </div>
                 `;
-                console.error('❌ Error en respuesta del dashboard:', data);
+                console.error('Error en respuesta del dashboard:', data);
             }
         } catch (error) {
             console.error('Error loading dashboard:', error);
             document.getElementById('dashboard').innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-icon">🔌</div>
+                    <div class="empty-icon"></div>
                     <h3>Error de conexión</h3>
                     <p>No se pudo conectar con el servidor</p>
                 </div>
@@ -238,33 +226,33 @@ class AdminApp {
     }
 
     static renderDashboard(stats) {
-        console.log('🎨 Renderizando dashboard con stats:', stats);
+        console.log('Renderizando dashboard con stats:', stats);
         
         const dashboardHTML = `
             <div class="dashboard-stats">
                 <div class="stat-card">
-                    <div class="stat-icon">📦</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-info">
                         <div class="stat-value">${stats.totalProducts || 0}</div>
                         <div class="stat-label">Productos Totales</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🏷️</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-info">
                         <div class="stat-value">${stats.totalCategories || 0}</div>
                         <div class="stat-label">Categorías</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🔥</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-info">
                         <div class="stat-value">${stats.activeOffers || 0}</div>
                         <div class="stat-label">Ofertas Activas</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-info">
                         <div class="stat-value">${stats.lowStock || 0}</div>
                         <div class="stat-label">Stock Bajo</div>
@@ -273,13 +261,13 @@ class AdminApp {
             </div>
             <div class="dashboard-actions">
                 <button class="btn btn-primary" onclick="AdminApp.switchTab('products')">
-                    📦 Gestionar Productos
+                    Gestionar Productos
                 </button>
                 <button class="btn btn-success" onclick="AdminApp.showProductForm()">
-                    ➕ Agregar Producto
+                    Agregar Producto
                 </button>
                 <button class="btn btn-outline" onclick="AdminApp.switchTab('categories')">
-                    🏷️ Gestionar Categorías
+                    Gestionar Categorías
                 </button>
             </div>
         `;
@@ -287,24 +275,24 @@ class AdminApp {
         const dashboardElement = document.getElementById('dashboard');
         if (dashboardElement) {
             dashboardElement.innerHTML = dashboardHTML;
-            console.log('✅ Dashboard renderizado');
+            console.log('Dashboard renderizado');
         }
     }
 
     // ==================== PRODUCTOS ====================
     static async loadProducts() {
         try {
-            console.log('📦 Cargando productos...');
+            console.log('Cargando productos...');
             const response = await fetch('/api/admin/products');
             const data = await response.json();
 
             if (data.success) {
                 this.renderProductsTable(data.products);
-                console.log(`✅ ${data.products.length} productos cargados`);
+                console.log(`${data.products.length} productos cargados`);
             } else {
                 document.getElementById('products').innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">❌</div>
+                        <div class="empty-icon"></div>
                         <h3>Error cargando productos</h3>
                         <p>${data.message || 'Error desconocido'}</p>
                     </div>
@@ -314,7 +302,7 @@ class AdminApp {
             console.error('Error loading products:', error);
             document.getElementById('products').innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-icon">🔌</div>
+                    <div class="empty-icon"></div>
                     <h3>Error de conexión</h3>
                     <p>No se pudieron cargar los productos</p>
                 </div>
@@ -323,13 +311,13 @@ class AdminApp {
     }
 
     static renderProductsTable(products) {
-        console.log('🎨 Renderizando tabla de productos');
+        console.log('Renderizando tabla de productos');
         
         const productsHTML = `
             <div class="section-header">
                 <h2>Gestión de Productos</h2>
                 <button class="btn btn-primary" onclick="AdminApp.showProductForm()">
-                    ➕ Agregar Producto
+                    Agregar Producto
                 </button>
             </div>
             <div class="table-container">
@@ -352,7 +340,7 @@ class AdminApp {
                                     <td>${product.id}</td>
                                     <td>
                                         <div class="product-info">
-                                            <span class="product-icon">${product.icon || '📦'}</span>
+                                            <span class="product-icon">${product.icon || ''}</span>
                                             <div>
                                                 <div class="product-name">${product.name}</div>
                                                 <div class="product-description">${product.description || 'Sin descripción'}</div>
@@ -377,21 +365,21 @@ class AdminApp {
                                         <span class="status-badge ${product.is_active ? 'active' : 'inactive'}">
                                             ${product.is_active ? 'Activo' : 'Inactivo'}
                                         </span>
-                                        ${product.is_daily_offer ? '<span class="offer-badge">🔥 Oferta</span>' : ''}
+                                        ${product.is_daily_offer ? '<span class="offer-badge">Oferta</span>' : ''}
                                     </td>
                                     <td>
                                         <div class="action-buttons">
                                             <button class="btn btn-sm btn-outline" 
                                                     onclick="AdminApp.editProduct(${product.id})">
-                                                ✏️ Editar
+                                                Editar
                                             </button>
                                             <button class="btn btn-sm btn-danger" 
                                                     onclick="AdminApp.deleteProduct(${product.id})">
-                                                🗑️ Eliminar
+                                                Eliminar
                                             </button>
                                             <button class="btn btn-sm ${product.is_daily_offer ? 'btn-warning' : 'btn-outline'}" 
                                                     onclick="AdminApp.toggleDailyOffer(${product.id}, ${!product.is_daily_offer})">
-                                                ${product.is_daily_offer ? '❌ Quitar Oferta' : '🔥 Oferta Día'}
+                                                ${product.is_daily_offer ? 'Quitar Oferta' : 'Oferta Día'}
                                             </button>
                                         </div>
                                     </td>
@@ -401,11 +389,11 @@ class AdminApp {
                     </table>
                 ` : `
                     <div class="empty-state">
-                        <div class="empty-icon">📦</div>
+                        <div class="empty-icon"></div>
                         <h3>No hay productos</h3>
                         <p>Comienza agregando tu primer producto</p>
                         <button class="btn btn-primary" onclick="AdminApp.showProductForm()">
-                            ➕ Agregar Producto
+                            Agregar Producto
                         </button>
                     </div>
                 `}
@@ -415,13 +403,13 @@ class AdminApp {
         const productsElement = document.getElementById('products');
         if (productsElement) {
             productsElement.innerHTML = productsHTML;
-            console.log('✅ Tabla de productos renderizada');
+            console.log('Tabla de productos renderizada');
         }
     }
 
     // ==================== FORMULARIO DE PRODUCTOS ====================
     static async showProductForm(product = null) {
-        console.log(`📝 ${product ? 'Editando' : 'Creando'} producto`);
+        console.log(`${product ? 'Editando' : 'Creando'} producto`);
         this.editingProduct = product;
         
         const modalHTML = `
@@ -472,16 +460,16 @@ class AdminApp {
                                     <label for="product-icon">Icono</label>
                                     <select id="product-icon" class="form-control">
                                         ${[
-                                            ['📦', 'Genérico'],
-                                            ['🍎', 'Fruta'],
-                                            ['🍗', 'Pollo'],
-                                            ['🥛', 'Lácteo'],
-                                            ['🫒', 'Aceite'],
-                                            ['🥤', 'Bebida'],
-                                            ['🍞', 'Pan'],
-                                            ['🥚', 'Huevos']
+                                            ['', 'Genérico'],
+                                            ['', 'Fruta'],
+                                            ['', 'Pollo'],
+                                            ['', 'Lácteo'],
+                                            ['', 'Aceite'],
+                                            ['', 'Bebida'],
+                                            ['', 'Pan'],
+                                            ['', 'Huevos']
                                         ].map(([icon, label]) => 
-                                            `<option value="${icon}" ${product && product.icon === icon ? 'selected' : ''}>${icon} ${label}</option>`
+                                            `<option value="${icon}" ${product && product.icon === icon ? 'selected' : ''}>${label}</option>`
                                         ).join('')}
                                     </select>
                                 </div>
@@ -542,18 +530,18 @@ class AdminApp {
             this.saveProduct();
         });
 
-        console.log('✅ Formulario de producto mostrado');
+        console.log('Formulario de producto mostrado');
     }
 
     static hideProductForm() {
         document.getElementById('product-modal')?.remove();
         this.editingProduct = null;
-        console.log('❌ Formulario de producto cerrado');
+        console.log('Formulario de producto cerrado');
     }
 
     static async loadCategoriesForSelect() {
         try {
-            console.log('🏷️ Cargando categorías para select...');
+            console.log('Cargando categorías para select...');
             const response = await fetch('/api/categories');
             const data = await response.json();
 
@@ -566,10 +554,10 @@ class AdminApp {
                             `<option value="${cat.id}">${cat.name}</option>`
                         ).join('')}
                     `;
-                    console.log(`✅ ${data.categories.length} categorías cargadas`);
+                    console.log(`${data.categories.length} categorías cargadas`);
                 }
             } else {
-                console.warn('⚠️ No se recibieron categorías válidas del servidor.');
+                console.warn('No se recibieron categorías válidas del servidor.');
             }
         } catch (error) {
             console.error('Error loading categories:', error);
@@ -577,7 +565,7 @@ class AdminApp {
     }
 
     static async saveProduct() {
-        console.log('💾 Guardando producto...');
+        console.log('Guardando producto...');
         
         const formData = {
             name: document.getElementById('product-name').value.trim(),
@@ -593,11 +581,11 @@ class AdminApp {
             is_active: document.getElementById('product-active').checked
         };
 
-        console.log('📦 Datos del producto:', formData);
+        console.log('Datos del producto:', formData);
 
         // Validaciones básicas
         if (!formData.name || isNaN(formData.price) || isNaN(formData.stock) || isNaN(formData.category_id)) {
-            this.showMessage('❌ Por favor complete todos los campos obligatorios correctamente.', 'error');
+            this.showMessage('Por favor complete todos los campos obligatorios correctamente.', 'error');
             return;
         }
 
@@ -607,7 +595,7 @@ class AdminApp {
                 : '/api/products';
             const method = this.editingProduct ? 'PUT' : 'POST';
 
-            console.log(`🌐 Enviando datos: ${method} ${url}`);
+            console.log(`Enviando datos: ${method} ${url}`);
 
             const response = await fetch(url, {
                 method,
@@ -619,34 +607,34 @@ class AdminApp {
 
             if (data.success) {
                 this.showMessage(
-                    this.editingProduct ? '✅ Producto actualizado exitosamente' : '✅ Producto creado exitosamente',
+                    this.editingProduct ? 'Producto actualizado exitosamente' : 'Producto creado exitosamente',
                     'success'
                 );
                 this.hideProductForm();
                 await this.loadProducts(); // Recargar la lista de productos
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error al guardar el producto'), 'error');
+                this.showMessage(data.message || 'Error al guardar el producto', 'error');
             }
         } catch (error) {
             console.error('Error saving product:', error);
-            this.showMessage('❌ Error de conexión al guardar', 'error');
+            this.showMessage('Error de conexión al guardar', 'error');
         }
     }
 
     static async editProduct(productId) {
         try {
-            console.log(`✏️ Editando producto ${productId}`);
+            console.log(`Editando producto ${productId}`);
             const response = await fetch(`/api/products/${productId}`);
             const data = await response.json();
             
             if (data.success && data.product) {
                 this.showProductForm(data.product);
             } else {
-                this.showMessage('❌ Error al cargar el producto', 'error');
+                this.showMessage('Error al cargar el producto', 'error');
             }
         } catch (error) {
             console.error('Error loading product:', error);
-            this.showMessage('❌ Error de conexión', 'error');
+            this.showMessage('Error de conexión', 'error');
         }
     }
 
@@ -656,25 +644,25 @@ class AdminApp {
         }
 
         try {
-            console.log(`🗑️ Eliminando producto ${productId}`);
+            console.log(`Eliminando producto ${productId}`);
             const response = await fetch(`/api/products/${productId}`, { method: 'DELETE' });
             const data = await response.json();
 
             if (data.success) {
-                this.showMessage('✅ Producto eliminado exitosamente', 'success');
+                this.showMessage('Producto eliminado exitosamente', 'success');
                 await this.loadProducts();
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error al eliminar el producto'), 'error');
+                this.showMessage(data.message || 'Error al eliminar el producto', 'error');
             }
         } catch (error) {
             console.error('Error deleting product:', error);
-            this.showMessage('❌ Error de conexión al eliminar', 'error');
+            this.showMessage('Error de conexión al eliminar', 'error');
         }
     }
 
     static async toggleDailyOffer(productId, isDailyOffer) {
         try {
-            console.log(`🔥 ${isDailyOffer ? 'Activando' : 'Desactivando'} oferta para producto ${productId}`);
+            console.log(`${isDailyOffer ? 'Activando' : 'Desactivando'} oferta para producto ${productId}`);
             
             const response = await fetch(`/api/products/${productId}`, {
                 method: 'PUT',
@@ -687,35 +675,35 @@ class AdminApp {
             if (data.success) {
                 this.showMessage(
                     isDailyOffer 
-                        ? '✅ Producto marcado como oferta del día' 
-                        : '✅ Producto quitado de ofertas del día',
+                        ? 'Producto marcado como oferta del día' 
+                        : 'Producto quitado de ofertas del día',
                     'success'
                 );
                 await this.loadOffers();
                 await this.loadProducts(); // Actualizar ambas vistas
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error al actualizar'), 'error');
+                this.showMessage(data.message || 'Error al actualizar', 'error');
             }
         } catch (error) {
             console.error('Error toggling daily offer:', error);
-            this.showMessage('❌ Error de conexión', 'error');
+            this.showMessage('Error de conexión', 'error');
         }
     }
 
     // ==================== OFERTAS ====================
     static async loadOffers() {
         try {
-            console.log('🔥 Cargando ofertas...');
+            console.log('Cargando ofertas...');
             const response = await fetch('/api/offers/daily');
             const data = await response.json();
 
             if (data.success) {
                 this.renderOffersTable(data.offers);
-                console.log(`✅ ${data.offers.length} ofertas cargadas`);
+                console.log(`${data.offers.length} ofertas cargadas`);
             } else {
                 document.getElementById('offers').innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">❌</div>
+                        <div class="empty-icon"></div>
                         <h3>Error cargando ofertas</h3>
                         <p>${data.message || 'Error desconocido'}</p>
                     </div>
@@ -725,7 +713,7 @@ class AdminApp {
             console.error('Error loading offers:', error);
             document.getElementById('offers').innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-icon">🔌</div>
+                    <div class="empty-icon"></div>
                     <h3>Error de conexión</h3>
                     <p>No se pudieron cargar las ofertas</p>
                 </div>
@@ -734,13 +722,13 @@ class AdminApp {
     }
 
     static renderOffersTable(offers) {
-        console.log('🎨 Renderizando tabla de ofertas');
+        console.log('Renderizando tabla de ofertas');
         
         const offersHTML = `
             <div class="section-header">
                 <h2>Ofertas del Día</h2>
                 <button class="btn btn-primary" onclick="AdminApp.switchTab('products')">
-                    📦 Gestionar Productos
+                    Gestionar Productos
                 </button>
             </div>
             <div class="table-container">
@@ -761,7 +749,7 @@ class AdminApp {
                                 <tr>
                                     <td>
                                         <div class="product-info">
-                                            <span class="product-icon">${offer.icon || '📦'}</span>
+                                            <span class="product-icon">${offer.icon || ''}</span>
                                             <div class="product-name">${offer.name}</div>
                                         </div>
                                     </td>
@@ -774,7 +762,7 @@ class AdminApp {
                                     <td>
                                         <button class="btn btn-sm btn-warning" 
                                                 onclick="AdminApp.toggleDailyOffer(${offer.id}, false)">
-                                            ❌ Quitar Oferta
+                                            Quitar Oferta
                                         </button>
                                     </td>
                                 </tr>
@@ -783,11 +771,11 @@ class AdminApp {
                     </table>
                 ` : `
                     <div class="empty-state">
-                        <div class="empty-icon">🔥</div>
+                        <div class="empty-icon"></div>
                         <h3>No hay ofertas activas</h3>
                         <p>Activa ofertas del día desde la gestión de productos</p>
                         <button class="btn btn-primary" onclick="AdminApp.switchTab('products')">
-                            📦 Ir a Productos
+                            Ir a Productos
                         </button>
                     </div>
                 `}
@@ -797,179 +785,145 @@ class AdminApp {
         const offersElement = document.getElementById('offers');
         if (offersElement) {
             offersElement.innerHTML = offersHTML;
-            console.log('✅ Tabla de ofertas renderizada');
+            console.log('Tabla de ofertas renderizada');
         }
     }
 
     // ==================== CATEGORÍAS (CRUD COMPLETO) ====================
-// ==================== CATEGORÍAS (CRUD COMPLETO) ====================
+    static async loadCategories() {
+        try {
+            console.log('Cargando categorías...');
+            const response = await fetch('/api/categories');
+            
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Respuesta de categorías:', data);
 
-static async loadCategories() {
-    try {
-        console.log('🏷️ Cargando categorías...');
-        const response = await fetch('/api/categories');
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('📊 Respuesta de categorías:', data);
-
-        if (data.success) {
-            this.renderCategoriesTable(data.categories);
-            console.log(`✅ ${data.categories.length} categorías cargadas`);
-        } else {
-            console.error('❌ Error en respuesta:', data);
+            if (data.success) {
+                this.renderCategoriesTable(data.categories);
+                console.log(`${data.categories.length} categorías cargadas`);
+            } else {
+                console.error('Error en respuesta:', data);
+                document.getElementById('categories').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"></div>
+                        <h3>Error cargando categorías</h3>
+                        <p>${data.message || 'Error del servidor'}</p>
+                        <button class="btn btn-outline" onclick="AdminApp.loadCategories()">
+                            Reintentar
+                        </button>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Error loading categories:', error);
             document.getElementById('categories').innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-icon">❌</div>
-                    <h3>Error cargando categorías</h3>
-                    <p>${data.message || 'Error del servidor'}</p>
+                    <div class="empty-icon"></div>
+                    <h3>Error de conexión</h3>
+                    <p>No se pudieron cargar las categorías: ${error.message}</p>
                     <button class="btn btn-outline" onclick="AdminApp.loadCategories()">
-                        🔄 Reintentar
+                        Reintentar
                     </button>
                 </div>
             `;
         }
-    } catch (error) {
-        console.error('❌ Error loading categories:', error);
-        document.getElementById('categories').innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🔌</div>
-                <h3>Error de conexión</h3>
-                <p>No se pudieron cargar las categorías: ${error.message}</p>
-                <button class="btn btn-outline" onclick="AdminApp.loadCategories()">
-                    🔄 Reintentar
+    }
+
+    static renderCategoriesTable(categories) {
+        console.log('Renderizando tabla de categorías con:', categories);
+        
+        // Verificar que categories sea un array
+        if (!Array.isArray(categories)) {
+            console.error('categories no es un array:', categories);
+            categories = [];
+        }
+        
+        const categoriesHTML = `
+            <div class="section-header">
+                <h2>Gestión de Categorías</h2>
+                <button class="btn btn-primary" onclick="AdminApp.showCategoryForm()">
+                    Nueva Categoría
                 </button>
             </div>
-        `;
-    }
-}
-
-static renderCategoriesTable(categories) {
-    console.log('🎨 Renderizando tabla de categorías con:', categories);
-    
-    // Verificar que categories sea un array
-    if (!Array.isArray(categories)) {
-        console.error('❌ categories no es un array:', categories);
-        categories = [];
-    }
-    
-    const categoriesHTML = `
-        <div class="section-header">
-            <h2>Gestión de Categorías</h2>
-            <button class="btn btn-primary" onclick="AdminApp.showCategoryForm()">
-                ➕ Nueva Categoría
-            </button>
-        </div>
-        <div class="table-container">
-            ${categories.length > 0 ? `
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Slug</th>
-                            <th>Icono</th>
-                            <th>Descripción</th>
-                            <th>Productos</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${categories.map(category => `
+            <div class="table-container">
+                ${categories.length > 0 ? `
+                    <table class="data-table">
+                        <thead>
                             <tr>
-                                <td>${category.id || 'N/A'}</td>
-                                <td>
-                                    <div class="category-info">
-                                        <span class="category-icon">${category.icon || '📦'}</span>
-                                        ${category.name || 'Sin nombre'}
-                                    </div>
-                                </td>
-                                <td>
-                                    <code style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
-                                        ${category.slug || 'sin-slug'}
-                                    </code>
-                                </td>
-                                <td>${category.icon || '📦'}</td>
-                                <td>${category.description || 'Sin descripción'}</td>
-                                <td>
-                                    <span class="product-count">${category.product_count || 0} productos</span>
-                                </td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-sm btn-outline" 
-                                                onclick="AdminApp.editCategory(${category.id})">
-                                            ✏️ Editar
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" 
-                                                onclick="AdminApp.deleteCategory(${category.id})">
-                                            🗑️ Eliminar
-                                        </button>
-                                    </div>
-                                </td>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Slug</th>
+                                <th>Icono</th>
+                                <th>Descripción</th>
+                                <th>Productos</th>
+                                <th>Acciones</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            ` : `
-                <div class="empty-state">
-                    <div class="empty-icon">🏷️</div>
-                    <h3>No hay categorías</h3>
-                    <p>Comienza creando tu primera categoría</p>
-                    <button class="btn btn-primary" onclick="AdminApp.showCategoryForm()">
-                        ➕ Nueva Categoría
-                    </button>
-                </div>
-            `}
-        </div>
-    `;
+                        </thead>
+                        <tbody>
+                            ${categories.map(category => `
+                                <tr>
+                                    <td>${category.id || 'N/A'}</td>
+                                    <td>
+                                        <div class="category-info">
+                                            <span class="category-icon">${category.icon || ''}</span>
+                                            ${category.name || 'Sin nombre'}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <code style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
+                                            ${category.slug || 'sin-slug'}
+                                        </code>
+                                    </td>
+                                    <td>${category.icon || ''}</td>
+                                    <td>${category.description || 'Sin descripción'}</td>
+                                    <td>
+                                        <span class="product-count">${category.product_count || 0} productos</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline" 
+                                                    onclick="AdminApp.editCategory(${category.id})">
+                                                Editar
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" 
+                                                    onclick="AdminApp.deleteCategory(${category.id})">
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                ` : `
+                    <div class="empty-state">
+                        <div class="empty-icon"></div>
+                        <h3>No hay categorías</h3>
+                        <p>Comienza creando tu primera categoría</p>
+                        <button class="btn btn-primary" onclick="AdminApp.showCategoryForm()">
+                            Nueva Categoría
+                        </button>
+                    </div>
+                `}
+            </div>
+        `;
 
-    const categoriesElement = document.getElementById('categories');
-    if (categoriesElement) {
-        categoriesElement.innerHTML = categoriesHTML;
-        console.log('✅ Tabla de categorías renderizada');
-    } else {
-        console.error('❌ No se encontró el elemento categories');
-    }
-}
-// Función temporal para debug
-static async debugCategories() {
-    try {
-        console.log('🐛 Debug: Probando endpoint de categorías...');
-        const response = await fetch('/api/categories');
-        console.log('📊 Status:', response.status);
-        console.log('📊 Headers:', response.headers);
-        const text = await response.text();
-        console.log('📊 Response text:', text);
-        
-        try {
-            const data = JSON.parse(text);
-            console.log('📊 Parsed JSON:', data);
-        } catch (e) {
-            console.error('❌ No se pudo parsear JSON:', e);
+        const categoriesElement = document.getElementById('categories');
+        if (categoriesElement) {
+            categoriesElement.innerHTML = categoriesHTML;
+            console.log('Tabla de categorías renderizada');
+        } else {
+            console.error('No se encontró el elemento categories');
         }
-    } catch (error) {
-        console.error('❌ Error en debug:', error);
     }
-}
-
-// Llama a esta función temporalmente en el init
-static init() {
-    console.log('🚀 Inicializando AdminApp...');
-    this.checkAuth();
-    this.bindEvents();
-    
-    // Temporal: debug de categorías
-    setTimeout(() => {
-        this.debugCategories();
-    }, 2000);
-}
 
     // ==================== FORMULARIO DE CATEGORÍAS ====================
     static async showCategoryForm(category = null) {
-        console.log(`📝 ${category ? 'Editando' : 'Creando'} categoría`);
+        console.log(`${category ? 'Editando' : 'Creando'} categoría`);
         this.editingCategory = category;
         
         const modalHTML = `
@@ -1004,24 +958,24 @@ static init() {
                                     <label for="category-icon">Icono</label>
                                     <select id="category-icon" class="form-control">
                                         ${[
-                                            ['📦', 'Genérico'],
-                                            ['🍎', 'Fruta'],
-                                            ['🍗', 'Carne'],
-                                            ['🥛', 'Lácteo'],
-                                            ['🫒', 'Aceite'],
-                                            ['🥤', 'Bebida'],
-                                            ['🍞', 'Pan'],
-                                            ['🥚', 'Huevos'],
-                                            ['🥬', 'Verdura'],
-                                            ['🐟', 'Pescado'],
-                                            ['🍪', 'Galletas'],
-                                            ['☕', 'Café'],
-                                            ['🧊', 'Congelados'],
-                                            ['🍷', 'Vinos'],
-                                            ['🧴', 'Limpieza'],
-                                            ['🐕', 'Mascotas']
+                                            ['', 'Genérico'],
+                                            ['', 'Fruta'],
+                                            ['', 'Carne'],
+                                            ['', 'Lácteo'],
+                                            ['', 'Aceite'],
+                                            ['', 'Bebida'],
+                                            ['', 'Pan'],
+                                            ['', 'Huevos'],
+                                            ['', 'Verdura'],
+                                            ['', 'Pescado'],
+                                            ['', 'Galletas'],
+                                            ['', 'Café'],
+                                            ['', 'Congelados'],
+                                            ['', 'Vinos'],
+                                            ['', 'Limpieza'],
+                                            ['', 'Mascotas']
                                         ].map(([icon, label]) => 
-                                            `<option value="${icon}" ${category && category.icon === icon ? 'selected' : ''}>${icon} ${label}</option>`
+                                            `<option value="${icon}" ${category && category.icon === icon ? 'selected' : ''}>${label}</option>`
                                         ).join('')}
                                     </select>
                                 </div>
@@ -1076,17 +1030,17 @@ static init() {
             this.saveCategory(category);
         });
 
-        console.log('✅ Formulario de categoría mostrado');
+        console.log('Formulario de categoría mostrado');
     }
 
     static hideCategoryForm() {
         document.getElementById('category-modal')?.remove();
         this.editingCategory = null;
-        console.log('❌ Formulario de categoría cerrado');
+        console.log('Formulario de categoría cerrado');
     }
 
     static async saveCategory(category = null) {
-        console.log('💾 Guardando categoría...');
+        console.log('Guardando categoría...');
         
         const formData = {
             name: document.getElementById('category-name').value.trim(),
@@ -1095,17 +1049,17 @@ static init() {
             description: document.getElementById('category-description').value.trim()
         };
 
-        console.log('🏷️ Datos de la categoría:', formData);
+        console.log('Datos de la categoría:', formData);
 
         // Validaciones básicas
         if (!formData.name || !formData.slug) {
-            this.showMessage('❌ Nombre y slug son obligatorios', 'error');
+            this.showMessage('Nombre y slug son obligatorios', 'error');
             return;
         }
 
         // Validar formato del slug
         if (!/^[a-z0-9\-]+$/.test(formData.slug)) {
-            this.showMessage('❌ El slug solo puede contener letras minúsculas, números y guiones', 'error');
+            this.showMessage('El slug solo puede contener letras minúsculas, números y guiones', 'error');
             return;
         }
 
@@ -1115,7 +1069,7 @@ static init() {
                 : '/api/categories';
             const method = category ? 'PUT' : 'POST';
 
-            console.log(`🌐 Enviando datos: ${method} ${url}`);
+            console.log(`Enviando datos: ${method} ${url}`);
 
             const response = await fetch(url, {
                 method,
@@ -1127,34 +1081,34 @@ static init() {
 
             if (data.success) {
                 this.showMessage(
-                    category ? '✅ Categoría actualizada exitosamente' : '✅ Categoría creada exitosamente',
+                    category ? 'Categoría actualizada exitosamente' : 'Categoría creada exitosamente',
                     'success'
                 );
                 this.hideCategoryForm();
                 await this.loadCategories(); // Recargar la lista de categorías
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error al guardar la categoría'), 'error');
+                this.showMessage(data.message || 'Error al guardar la categoría', 'error');
             }
         } catch (error) {
             console.error('Error saving category:', error);
-            this.showMessage('❌ Error de conexión al guardar', 'error');
+            this.showMessage('Error de conexión al guardar', 'error');
         }
     }
 
     static async editCategory(categoryId) {
         try {
-            console.log(`✏️ Editando categoría ${categoryId}`);
+            console.log(`Editando categoría ${categoryId}`);
             const response = await fetch(`/api/categories/${categoryId}`);
             const data = await response.json();
             
             if (data.success && data.category) {
                 this.showCategoryForm(data.category);
             } else {
-                this.showMessage('❌ Error al cargar la categoría', 'error');
+                this.showMessage('Error al cargar la categoría', 'error');
             }
         } catch (error) {
             console.error('Error loading category:', error);
-            this.showMessage('❌ Error de conexión', 'error');
+            this.showMessage('Error de conexión', 'error');
         }
     }
 
@@ -1164,21 +1118,21 @@ static init() {
         }
 
         try {
-            console.log(`🗑️ Eliminando categoría ${categoryId}`);
+            console.log(`Eliminando categoría ${categoryId}`);
             const response = await fetch(`/api/categories/${categoryId}`, { 
                 method: 'DELETE' 
             });
             const data = await response.json();
 
             if (data.success) {
-                this.showMessage('✅ Categoría eliminada exitosamente', 'success');
+                this.showMessage('Categoría eliminada exitosamente', 'success');
                 await this.loadCategories();
             } else {
-                this.showMessage('❌ ' + (data.message || 'Error al eliminar la categoría'), 'error');
+                this.showMessage(data.message || 'Error al eliminar la categoría', 'error');
             }
         } catch (error) {
             console.error('Error deleting category:', error);
-            this.showMessage('❌ Error de conexión al eliminar', 'error');
+            this.showMessage('Error de conexión al eliminar', 'error');
         }
     }
 
@@ -1260,9 +1214,9 @@ document.head.appendChild(style);
 
 // Inicializar la aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('📄 DOM cargado, inicializando AdminApp...');
+    console.log('DOM cargado, inicializando AdminApp...');
     AdminApp.init();
 });
 
-// Exponer clase globalmente
+
 window.AdminApp = AdminApp;
