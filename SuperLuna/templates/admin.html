@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - SuperLuna</title>
+    <link rel="stylesheet" href="../static/admin/css/admin.css">
+    <link rel="stylesheet" href="../static/admin/css/admin-responsive.css">
+</head>
+<body>
+    <!-- Panel de Login -->
+    <div id="login-panel" class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>🌙 SuperLuna</h1>
+                <p>Panel de Administración</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" class="form-control" value="admin" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" class="form-control" value="admin123" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Administración -->
+    <div id="admin-panel" class="admin-container" style="display: none;">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <h2>🌙 SuperLuna</h2>
+                <p>Panel de Admin</p>
+            </div>
+            <div class="admin-menu">
+                <a href="#" class="admin-menu-item active" data-tab="dashboard">
+                    <span class="admin-menu-icon">📊</span>
+                    <span class="admin-menu-text">Dashboard</span>
+                </a>
+                <a href="#" class="admin-menu-item" data-tab="products">
+                    <span class="admin-menu-icon">📦</span>
+                    <span class="admin-menu-text">Productos</span>
+                </a>
+                <a href="#" class="admin-menu-item" data-tab="offers">
+                    <span class="admin-menu-icon">🔥</span>
+                    <span class="admin-menu-text">Ofertas</span>
+                </a>
+                <a href="#" class="admin-menu-item" data-tab="categories">
+                    <span class="admin-menu-icon">🏷️</span>
+                    <span class="admin-menu-text">Categorías</span>
+                </a>
+                <a href="#" class="admin-menu-item" id="logout-btn">
+                    <span class="admin-menu-icon">🚪</span>
+                    <span class="admin-menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Header -->
+            <div class="admin-header">
+                <div class="admin-header-left">
+                    <h1 id="admin-page-title">Dashboard</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user">
+                        <div class="admin-user-avatar">A</div>
+                        <div>
+                            <div>Administrador</div>
+                            <div style="font-size: 0.8rem; color: #7f8c8d;">admin@superluna.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Dashboard -->
+                <div id="dashboard" class="tab-content active">
+                    <p>Cargando dashboard...</p>
+                </div>
+
+                <!-- Products -->
+                <div id="products" class="tab-content">
+                    <p>Cargando productos...</p>
+                </div>
+
+                <!-- Offers -->
+                <div id="offers" class="tab-content">
+                    <p>Cargando ofertas...</p>
+                </div>
+
+                <!-- Categories -->
+                <div id="categories" class="tab-content">
+                    <p>Cargando categorías...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="../static/admin/js/admin-main.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperLuna - Frescura y Calidad</title>
+    <!-- SOLO estos archivos CSS -->
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/hero.css">
+    <link rel="stylesheet" href="../static/css/products.css"> 
+    <link rel="stylesheet" href="../static/css/components.css">
+    <link rel="stylesheet" href="../static/css/cart.css">
+    <link rel="stylesheet" href="../static/css/footer.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">🌙</span>
+                    <h1>SuperLuna</h1>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="/admin/index.html">
+                        <i class="fas fa-user"></i>
+                        <span class="action-text">Iniciar sesión</span>
+                    </a>
+                    <div class="cart-icon">
+                        <a href="#" id="open-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="action-text">Carrito</span>
+                        </a>
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav id="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-section="inicio">Inicio</a></li>
+                    <li><a href="#frutas-verduras" class="nav-link category-link" data-section="frutas-verduras">Frutas y Verduras</a></li>
+                    <li><a href="#carnes-pescados" class="nav-link category-link" data-section="carnes-pescados">Carnes y Pescados</a></li>
+                    <li><a href="#lacteos-huevos" class="nav-link category-link" data-section="lacteos-huevos">Lácteos y Huevos</a></li>
+                    <li><a href="#despensa" class="nav-link category-link" data-section="despensa">Despensa</a></li>
+                    <li><a href="#bebidas" class="nav-link category-link" data-section="bebidas">Bebidas</a></li>
+                    <li><a href="#ofertas" class="nav-link" data-section="ofertas">Ofertas</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#" class="mobile-menu-item" data-section="inicio">
+                <span class="mobile-menu-icon"><i class="fas fa-home"></i></span>
+                <span class="mobile-menu-text">Inicio</span>
+            </a>
+            <a href="#frutas-verduras" class="mobile-menu-item category-link" data-section="frutas-verduras">
+                <span class="mobile-menu-icon"><i class="fas fa-apple-alt"></i></span>
+                <span class="mobile-menu-text">Frutas y Verduras</span>
+            </a>
+            <a href="#carnes-pescados" class="mobile-menu-item category-link" data-section="carnes-pescados">
+                <span class="mobile-menu-icon"><i class="fas fa-drumstick-bite"></i></span>
+                <span class="mobile-menu-text">Carnes y Pescados</span>
+            </a>
+            <a href="#lacteos-huevos" class="mobile-menu-item category-link" data-section="lacteos-huevos">
+                <span class="mobile-menu-icon"><i class="fas fa-cheese"></i></span>
+                <span class="mobile-menu-text">Lácteos y Huevos</span>
+            </a>
+            <a href="#despensa" class="mobile-menu-item category-link" data-section="despensa">
+                <span class="mobile-menu-icon"><i class="fas fa-shopping-basket"></i></span>
+                <span class="mobile-menu-text">Despensa</span>
+            </a>
+            <a href="#bebidas" class="mobile-menu-item category-link" data-section="bebidas">
+                <span class="mobile-menu-icon"><i class="fas fa-wine-bottle"></i></span>
+                <span class="mobile-menu-text">Bebidas</span>
+            </a>
+            <a href="#ofertas" class="mobile-menu-item" data-section="ofertas">
+                <span class="mobile-menu-icon"><i class="fas fa-fire"></i></span>
+                <span class="mobile-menu-text">Ofertas</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobile-login">
+                <span class="mobile-menu-icon"><i class="fas fa-user"></i></span>
+                <span class="mobile-menu-text">Iniciar Sesión</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobile-cart">
+                <span class="mobile-menu-icon"><i class="fas fa-shopping-cart"></i></span>
+                <span class="mobile-menu-text">Carrito</span>
+                <span class="mobile-cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Banner principal -->
+    <section class="hero">
+        <div class="container">
+            <h2>Frescura y Calidad en cada Producto</h2>
+            <p>Encuentra los mejores productos para tu hogar con precios increíbles y servicio excepcional.</p>
+            <a href="#frutas-verduras" class="btn btn-primary category-link" data-section="frutas-verduras">
+                <i class="fas fa-shopping-bag"></i>
+                Ver Productos
+            </a>
+        </div>
+    </section>
+
+    <!-- Sección Inicio -->
+    <section id="inicio" class="content-section active">
+        <div class="container">
+            <h2 class="section-title">Bienvenido a tu supermercado de confianza</h2>
+            <p class="intro-text">
+                Somos tu supermercado de confianza, ofreciendo productos frescos y de calidad para toda la familia. 
+                Navega por nuestras secciones para descubrir nuestras ofertas y servicios.
+            </p>
+
+            <section id="ofertas-del-dia" class="daily-offers-section">
+                <div class="section-header">
+                    <h2 class="section-title">🔥 Ofertas del Día</h2>
+                    <div class="offer-timer">
+                        <span class="timer-icon"><i class="fas fa-clock"></i></span>
+                        <span class="timer-text">Termina en: </span>
+                        <span class="timer-countdown" id="daily-offer-timer">23:59:59</span>
+                    </div>
+                </div>
+                
+                <div class="daily-offers-grid" id="daily-offers-grid">
+                    <!-- Las ofertas del día se cargarán aquí con JavaScript -->
+                </div>
+                
+                <div class="view-all-offers">
+                    <a href="#ofertas" class="btn btn-outline" data-section="ofertas">Ver Todas las Ofertas</a>
+                </div>
+            </section>
+            
+            <div class="services">
+                <div class="service-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Envío a Domicilio</h3>
+                    <p>Recibe tus compras en la puerta de tu casa sin costo adicional en pedidos superiores a $50.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Horario Extendido</h3>
+                    <p>Abiertos de 7:00 am a 11:00 pm para que puedas hacer tus compras cuando más te convenga.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Múltiples Medios de Pago</h3>
+                    <p>Aceptamos efectivo, tarjetas de crédito/débito y transferencias bancarias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Frutas y Verduras -->
+    <section id="frutas-verduras" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Frutas y Verduras Frescas</h2>
+            <div class="container-products" id="frutas-verduras-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Carnes y Pescados -->
+    <section id="carnes-pescados" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Carnes y Pescados</h2>
+            <div class="container-products" id="carnes-pescados-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Lácteos y Huevos -->
+    <section id="lacteos-huevos" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Lácteos y Huevos</h2>
+            <div class="container-products" id="lacteos-huevos-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Despensa -->
+    <section id="despensa" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Despensa</h2>
+            <div class="container-products" id="despensa-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Bebidas -->
+    <section id="bebidas" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Bebidas</h2>
+            <div class="container-products" id="bebidas-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Ofertas -->
+    <section id="ofertas" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Ofertas Especiales</h2>
+            <div class="container-products" id="offers-grid">
+                <!-- Las ofertas se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Servicios -->
+    <section id="servicios" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services">
+                <div class="service-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Envío a Domicilio</h3>
+                    <p>Recibe tus compras en la puerta de tu casa sin costo adicional en pedidos superiores a $50.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Horario Extendido</h3>
+                    <p>Abiertos de 7:00 am a 11:00 pm para que puedas hacer tus compras cuando más te convenga.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Múltiples Medios de Pago</h3>
+                    <p>Aceptamos efectivo, tarjetas de crédito/débito y transferencias bancarias.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-store"></i>
+                    <h3>Recogida en Tienda</h3>
+                    <p>Compra online y recoge en nuestra tienda sin hacer fila.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Programa de Puntos</h3>
+                    <p>Acumula puntos en cada compra y canjéalos por descuentos.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Atención Personalizada</h3>
+                    <p>Nuestro equipo está siempre disponible para ayudarte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrito -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="close-cart" id="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="checkout-btn">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SuperLuna</h3>
+                    <p>Tu tienda de confianza con los mejores productos frescos y de calidad para tu familia.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="inicio">Inicio</a></li>
+                        <li><a href="#frutas-verduras" class="nav-link category-link" data-section="frutas-verduras">Frutas y Verduras</a></li>
+                        <li><a href="#carnes-pescados" class="nav-link category-link" data-section="carnes-pescados">Carnes y Pescados</a></li>
+                        <li><a href="#lacteos-huevos" class="nav-link category-link" data-section="lacteos-huevos">Lácteos y Huevos</a></li>
+                        <li><a href="#despensa" class="nav-link category-link" data-section="despensa">Despensa</a></li>
+                        <li><a href="#bebidas" class="nav-link category-link" data-section="bebidas">Bebidas</a></li>
+                        <li><a href="#ofertas" class="nav-link" data-section="ofertas">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Japon #123</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@superluna.com</li>
+                        <li><i class="fas fa-clock"></i> Lunes a Domingo: 7:00 am - 11:00 pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SuperLuna. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SOLO tu main.js ORIGINAL -->
+    <script src="../static/js/main.js"></script>
+</body>
+</html>
