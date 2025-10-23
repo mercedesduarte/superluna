@@ -1,4 +1,3 @@
-// main.js - ARCHIVO COMPLETO Y FUNCIONAL
 class SuperLunaApp {
     constructor() {
         this.currentCategory = null;

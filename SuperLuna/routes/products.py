@@ -1,4 +1,4 @@
- from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify
 from database import db
 from models import Product, Category
 

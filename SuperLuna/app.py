@@ -543,7 +543,7 @@ def not_found(error):
 def internal_error(error):
     return jsonify({'success': False, 'error': 'Error interno del servidor'}), 500
 
-# ==================== CRUD COMPLETO - PRODUCTOS ====================
+
 @app.route('/api/products', methods=['POST'])
 def create_product():
     try:

@@ -31,10 +31,10 @@ body {
     min-height: 100vh;
 }
 
-/* ==================== SIDEBAR MEJORADO ==================== */
+
 .admin-sidebar {
     width: var(--sidebar-width);
-    background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    background: linear-gradient(to right, #667eea, #764ba2, #2a5298);
     color: white;
     position: fixed;
     height: 100vh;

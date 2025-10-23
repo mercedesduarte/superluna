@@ -1,4 +1,3 @@
-// ==================== ADMIN APP - TODO EN UNO ====================
 
 class AdminApp {
     static isAuthenticated = false;
